@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  ubuntu-texlive-ja:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sleep infinity
+    volumes:
+      - ../:/workdir
+    environment:
+      SHELL: "/bin/bash"

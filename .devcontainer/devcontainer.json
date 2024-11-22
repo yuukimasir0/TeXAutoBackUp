@@ -1,0 +1,58 @@
+{
+    "name": "ubuntu-texlive-ja",
+    "dockerComposeFile": "docker-compose.yaml",
+    "service": "ubuntu-texlive-ja",
+    "workspaceFolder": "/workdir",
+    "shutdownAction": "stopCompose",
+    "mounts": [
+        "source=/run/host-services/ssh-auth.sock,target=/tmp/ssh-agent.sock,type=bind"
+      ],
+      "containerEnv": {
+        "SSH_AUTH_SOCK": "/tmp/ssh-agent.sock"
+      },
+    "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "james-yu.latex-workshop"
+            ],
+            "settings": {
+                "latex-workshop.latex.recipes": [
+                    {
+                        "name": "upLaTeX",
+                        "tools": ["Latexmk (upLaTeX)"]
+                    },
+                    {
+                        "name": "pLaTeX",
+                        "tools": ["Latexmk (pLaTeX)"]
+                    }
+                ],
+                "latex-workshop.latex.tools": [
+                    {
+                        "name": "Latexmk (upLaTeX)",
+                        "command": "latexmk",
+                        "args": [
+                        "-f", "-gg", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOC%"
+                        ]
+                    },
+                    {
+                        "name": "Latexmk (pLaTeX)",
+                        "command": "latexmk",
+                        "args": [
+                        "-f", "-gg", "-pv", "-latex='platex'", "-latexoption='-kanji=utf8 -no-guess-input-env'", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOC%"
+                        ]
+                    }
+                ],
+                "latex-workshop.view.pdf.viewer": "tab",
+                "latex-workshop.latex.clean.fileTypes": [
+                    "*.aux", "*.bbl", "*.blg", "*.idx", "*.ind", "*.lof", "*.lot", "*.out", "*.toc", "*.acn", "*.acr", "*.alg", "*.glg", "*.glo", "*.gls", "*.ist", "*.fls", "*.log", "*.fdb_latexmk", "*.synctex.gz",
+                    "_minted*", "*.nav", "*.snm", "*.vrb"
+                ],
+                "latex-workshop.latex.magic.args": [
+                    "-f", "-gg", "-pv", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOC%"
+                ],
+                "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?　、。「」【】『』（）！？てにをはがのともへでや"
+            }
+        }
+    }
+}
